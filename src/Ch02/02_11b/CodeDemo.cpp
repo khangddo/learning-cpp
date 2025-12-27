@@ -7,6 +7,6 @@
 
 int main(){
 
-    std::cout << mod << std::endl << std::endl;
+    std::cout << std::endl << std::endl;
     return (0);
 }
