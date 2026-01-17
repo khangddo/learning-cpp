@@ -28,8 +28,24 @@ int main(){
     // Write your code here
 
     std::string student_str;
-    student_str = students[0].get_name(); // Change this to the selected student's name
-
+    student_str = students[id - 1].get_name(); // Change this to the selected student's name
+    float tt_creds = 0;
+    float tt_pts = 0;
+    for (auto x : grades) {
+        float grds = 0;
+        float crds = 0;
+        if (x.get_student_id() == id) {
+            grds = 69 - x.get_grade();
+            // std::cout << x.get_grade() << ": " << grds << std::endl;
+            crds = courses[x.get_course_id() - 1].get_credits();
+            // std::cout << x.get_course_id() << ": " << crds << std::endl;
+            tt_pts += grds * crds;
+            // std::cout << tt_pts << std::endl;
+            tt_creds += courses[x.get_course_id() - 1].get_credits();
+            // std::cout << tt_creds << std::endl;
+        }
+    }
+    GPA = tt_pts / tt_creds;
     std::cout << "The GPA for " << student_str << " is " << GPA << std::endl;
     
     std::cout << std::endl << std::endl;
