@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 #include "records.h"
+#include <fstream>
+#include <string>
 
 void initialize(StudentRecords&);
 
@@ -24,18 +26,56 @@ int main(){
 }
 
 void initialize(StudentRecords& srec){
-    srec.add_student(1, "George P. Burdell");
-    srec.add_student(2, "Nancy Rhodes");
+    std::ifstream inFile;
+    std::string str;
+    char c;
+    int num;
 
-    srec.add_course(1, "Algebra", 5);
-    srec.add_course(2, "Physics", 4);
-    srec.add_course(3, "English", 3);
-    srec.add_course(4, "Economics", 4);
+    inFile.open("students.txt");
+    if (inFile.fail()) {
+        std::cout << "Failed to open file students.txt" << std::endl;
+    } else {
+        while (!inFile.eof()) {
+            getline(inFile, str);
+            num = stoi(str);
+            getline(inFile, str);
+            srec.add_student(num, str);
+        }
+        inFile.close();
+    }   
 
-    srec.add_grade(1, 1, 'B');
-    srec.add_grade(1, 2, 'A');
-    srec.add_grade(1, 3, 'C');
-    srec.add_grade(2, 1, 'A'); 
-    srec.add_grade(2, 2, 'A');
-    srec.add_grade(2, 4, 'B');
+    int cred;
+    std::string cname;
+
+    inFile.open("courses.txt");
+    if (inFile.fail()) {
+        std::cout << "Failed to open file courses.txt" << std::endl;
+    } else {
+        while (!inFile.eof()) {
+            getline(inFile, str);
+            num = stoi(str);
+            getline(inFile, cname);
+            getline(inFile, str);
+            cred = stoi(str);
+            srec.add_course(num, cname, cred);
+        }
+        inFile.close();
+    }
+
+    int course;
+    inFile.open("grades.txt");
+    if (inFile.fail()) {
+        std::cout << "Failed to open file grades.txt" << std::endl;
+    } else {
+        while (!inFile.eof()) {
+            getline(inFile, str);
+            num = stoi(str);
+            getline(inFile, str);
+            course = stoi(str);
+            getline(inFile, str);
+            c = str[0];
+            srec.add_grade(num, course, c);
+        }
+        inFile.close();
+    }
 }
